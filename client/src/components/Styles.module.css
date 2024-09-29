@@ -1,0 +1,12 @@
+html {
+    padding: 50px 200px;
+}
+
+.username-wrapper {
+    font-size: 24px;
+    text-align: center;
+}
+
+.name-question {
+    color: red;
+}
