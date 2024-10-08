@@ -6,7 +6,7 @@ import React from "react";
 import RoomsList from "./RoomsList";
 import styles from "./Home.module.scss";
 
-export default function Home({ socket, userId }) {
+export default function Home({ socket }) {
   const [hostedRooms, setHostedRooms] = useState([]);
 
   const username = getUsername();
