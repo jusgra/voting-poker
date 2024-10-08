@@ -4,11 +4,10 @@ import { getUsername } from "./roomUtils";
 import { v4 as uuidv4 } from "uuid";
 import React from "react";
 import RoomsList from "./RoomsList";
-import styles from "./Styles.module.css";
+import styles from "./Home.module.scss";
 
 export default function Home({ socket, userId }) {
   const [hostedRooms, setHostedRooms] = useState([]);
-  const [isUsernameTyped, setIsUsernameTyped] = useState(false);
 
   const username = getUsername();
 
