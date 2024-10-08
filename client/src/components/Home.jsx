@@ -10,7 +10,6 @@ export default function Home({ socket }) {
   const [hostedRooms, setHostedRooms] = useState([]);
 
   const username = getUsername();
-  // testing2
   const navigator = useNavigate();
 
   const handleClickJoin = (clickedRoomId) => {
