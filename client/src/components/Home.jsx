@@ -8,9 +8,13 @@ import styles from "./Home.module.scss";
 
 export default function Home({ socket }) {
   const [hostedRooms, setHostedRooms] = useState([]);
+  const [usernameValue, setUsernameValue] = useState("");
 
-  const username = getUsername();
   const navigator = useNavigate();
+
+  const handleChange = (e) => {
+    setUsernameValue(e.target.value);
+  };
 
   const handleClickJoin = (clickedRoomId) => {
     sessionStorage.setItem("isUserHost", false);
@@ -20,12 +24,12 @@ export default function Home({ socket }) {
   const handleHost = () => {
     sessionStorage.setItem("isUserHost", true);
 
-    socket.emit("ask-to-join", { roomId: uuidv4(), isHosting: true, username });
+    socket.emit("ask-to-join", { roomId: uuidv4(), isHosting: true, usernameValue });
   };
 
   useEffect(() => {
     socket.on("join-allowed", (data) => {
-      sessionStorage.setItem("username", username);
+      sessionStorage.setItem("username", usernameValue);
       navigator(`/room/${data}`);
     });
 
@@ -54,7 +58,13 @@ export default function Home({ socket }) {
     <div>
       <div>
         <p className={styles.usernameWrapper}>What is your name?</p>
-        <input placeholder="username" value={username}></input>
+        <input placeholder="What is your name?" onChange={handleChange} value={usernameValue}></input>
+        <button
+          className={styles.buttonRng}
+          onClick={() => {
+            setUsernameValue(getUsername());
+          }}
+        />
       </div>
 
       <div>

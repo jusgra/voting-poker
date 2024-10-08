@@ -1,13 +1,19 @@
 html {
-    padding: 50px 200px;
+  padding: 50px 200px;
+  font-family: "Montserrat", sans-serif;
+  background-color: #ffffff;
 }
 
 .username-wrapper {
-    color: blue;
-    font-size: 24px;
-    text-align: center;
+  color: blue;
+  font-size: 24px;
+  text-align: center;
 }
 
 .name-question {
-    color: red;
+  color: red;
+}
+
+.button-rng {
+  height: 20px;
 }
