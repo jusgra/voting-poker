@@ -1,10 +1,14 @@
 import React from "react";
+import styles from "./RoomList.module.scss";
 
 export default function RoomsList({ hostedRooms, roomClick }) {
   return (
     <>
-      <h2>List of hosted rooms</h2>
-      <ul>
+      <h2 className={styles.header}>List of hosted rooms</h2>
+        <div className={styles.tableContainer}>
+
+
+      <ul className={styles.roomList}>
         {hostedRooms?.length !== 0 ? (
           hostedRooms.map((single) => {
             return (
@@ -16,7 +20,7 @@ export default function RoomsList({ hostedRooms, roomClick }) {
         ) : (
           <div>No rooms are created at the moment</div>
         )}
-      </ul>
+      </ul></div>
     </>
   );
 }

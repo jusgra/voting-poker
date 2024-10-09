@@ -9,13 +9,13 @@ body {
 }
 
 .username-input {
-  color: blue;
   font-size: 32px;
   text-align: center;
   width: 100%;
   height: 50px;
   border-radius: 16px;
   box-sizing: border-box;
+  border: 1px solid gray;
 }
 
 .name-question {
@@ -24,4 +24,5 @@ body {
 
 .button-rng {
   height: 20px;
+  width: 100%;
 }
