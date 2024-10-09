@@ -57,8 +57,7 @@ export default function Home({ socket }) {
   return (
     <div>
       <div>
-        <p className={styles.usernameWrapper}>What is your name?</p>
-        <input placeholder="What is your name?" onChange={handleChange} value={usernameValue}></input>
+        <input className={styles.usernameInput} placeholder="What is your name?" onChange={handleChange} value={usernameValue}></input>
         <button
           className={styles.buttonRng}
           onClick={() => {
