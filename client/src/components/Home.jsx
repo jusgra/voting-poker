@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getUsername } from "./roomUtils";
 import { v4 as uuidv4 } from "uuid";
 import React from "react";
 import RoomsList from "./RoomsList";
 import styles from "./Home.module.scss";
+import Button from "./Button";
+import { ButtonTypes } from "../ButtonTypes";
+import { Text } from "./textConstants";
 
 export default function Home({ socket }) {
   const [hostedRooms, setHostedRooms] = useState([]);
@@ -16,15 +18,15 @@ export default function Home({ socket }) {
     setUsernameValue(e.target.value);
   };
 
-  const handleClickJoin = (clickedRoomId) => {
-    sessionStorage.setItem("isUserHost", false);
-    socket.emit("ask-to-join", { roomId: clickedRoomId, isHosting: false });
-  };
+  const handleRoomJoin = (isHostingRoom, clickedRoomId) => {
+    if (!usernameValue) {
+      alert("Please input your name");
+      return;
+    }
+    sessionStorage.setItem("isUserHost", isHostingRoom);
+    const roomId = isHostingRoom ? uuidv4() : clickedRoomId;
 
-  const handleHost = () => {
-    sessionStorage.setItem("isUserHost", true);
-
-    socket.emit("ask-to-join", { roomId: uuidv4(), isHosting: true, usernameValue });
+    socket.emit("ask-to-join", { roomId, isHosting: isHostingRoom, username: usernameValue });
   };
 
   useEffect(() => {
@@ -52,24 +54,23 @@ export default function Home({ socket }) {
     socket.emit("get-hosted-rooms");
   }, []);
 
-  console.log(hostedRooms);
-
   return (
     <div>
-      <div>
-        <input className={styles.usernameInput} placeholder="What is your name?" onChange={handleChange} value={usernameValue}></input>
-        <button
-          className={styles.buttonRng}
-          onClick={() => {
-            setUsernameValue(getUsername());
-          }}
-        />
+      <div className={styles.usernameWrapper}>
+        <input
+          className={styles.usernameInput}
+          placeholder={Text.Home.Placeholder}
+          onChange={handleChange}
+          value={usernameValue}
+        ></input>
       </div>
 
-      <div>
-        <RoomsList hostedRooms={hostedRooms} roomClick={handleClickJoin} />
+      <div className={styles.roomListWrapper}>
+        <RoomsList hostedRooms={hostedRooms} roomClick={handleRoomJoin} />
       </div>
-      <button onClick={handleHost}>HOST</button>
+      <div className={styles.buttonWrapper}>
+        <Button onClick={() => handleRoomJoin(true)} buttonText={Text.Home.HostButton} type={ButtonTypes.HOST} />
+      </div>
     </div>
   );
 }

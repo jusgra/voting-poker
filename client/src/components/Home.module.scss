@@ -1,21 +1,37 @@
 html {
   padding: 100px 200px;
   font-family: "Montserrat", sans-serif;
-  background-color: #ffffff;
+  background-color: #ecdfcc;
 }
 
 body {
   margin: 0;
 }
 
+.username-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
 .username-input {
+  background-color: transparent;
   font-size: 32px;
   text-align: center;
-  width: 100%;
+  width: 50%;
   height: 50px;
-  border-radius: 16px;
+  border: 0;
   box-sizing: border-box;
-  border: 1px solid gray;
+  border-bottom: 1px solid #697565;
+  color: #3c3d37;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: #697565;
+    opacity: 0.3;
+  }
 }
 
 .name-question {
@@ -25,4 +41,19 @@ body {
 .button-rng {
   height: 20px;
   width: 90%;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.room-list-wrapper {
+  margin-top: 50px;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
 }
