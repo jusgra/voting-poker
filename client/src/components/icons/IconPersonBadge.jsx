@@ -6,7 +6,7 @@ export default function IconPersonBadge({ sizeInPx = 16, styling }) {
       xmlns="http://www.w3.org/2000/svg"
       width={`${sizeInPx}px`}
       height={`${sizeInPx}px`}
-      fill="currentColor"
+      // fill="currentColor"
       viewBox="0 0 16 16"
       className={styling}
     >

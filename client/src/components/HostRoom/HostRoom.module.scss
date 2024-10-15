@@ -1,0 +1,17 @@
+.room-container {
+}
+
+.room-info-header {
+}
+
+.room-header {
+  font-weight: normal;
+
+  & .room-name {
+    font-weight: bold;
+  }
+}
+
+.back-button {
+  background-color: rgba(38, 0, 255, 0.521);
+}

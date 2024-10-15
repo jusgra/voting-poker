@@ -1,17 +1,21 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import React from "react";
 import RoomsList from "./RoomsList";
 import styles from "./Home.module.scss";
-import Button from "./Button";
-import { ButtonTypes } from "../ButtonTypes";
-import { Text } from "./textConstants";
+import Button from "../Button/Button";
+import { ButtonTypes } from "../../utils/ButtonTypes";
+import { textConst, toastSettings } from "../../utils/constants";
+import { getUsername } from "../../utils/roomUtils";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home({ socket }) {
   const [hostedRooms, setHostedRooms] = useState([]);
-  const [usernameValue, setUsernameValue] = useState("");
-
+  const [usernameValue, setUsernameValue] = useState(getUsername());
+  const location = useLocation();
   const navigator = useNavigate();
 
   const handleChange = (e) => {
@@ -20,7 +24,7 @@ export default function Home({ socket }) {
 
   const handleRoomJoin = (isHostingRoom, clickedRoomId) => {
     if (!usernameValue) {
-      alert("Please input your name");
+      toast.error(textConst.home.toasts.whatsYourName, toastSettings);
       return;
     }
     sessionStorage.setItem("isUserHost", isHostingRoom);
@@ -52,24 +56,35 @@ export default function Home({ socket }) {
 
   useEffect(() => {
     socket.emit("get-hosted-rooms");
+
+    let timeoutId;
+
+    if (location.state?.disconnected) {
+      timeoutId = setTimeout(() => {
+        toast.warning(textConst.home.toasts.hostLeft, toastSettings);
+        navigator(".", { replace: true, state: { disconnected: false } });
+      }, 500);
+    }
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return (
-    <div>
+    <div className={styles.homeContainer}>
+      <ToastContainer />
       <div className={styles.usernameWrapper}>
         <input
           className={styles.usernameInput}
-          placeholder={Text.Home.Placeholder}
+          placeholder={textConst.home.placeholder}
           onChange={handleChange}
           value={usernameValue}
         ></input>
       </div>
 
       <div className={styles.roomListWrapper}>
-        <RoomsList hostedRooms={hostedRooms} roomClick={handleRoomJoin} />
+        <RoomsList hostedRooms={hostedRooms} roomClick={(id) => handleRoomJoin(false, id)} />
       </div>
-      <div className={styles.buttonWrapper}>
-        <Button onClick={() => handleRoomJoin(true)} buttonText={Text.Home.HostButton} type={ButtonTypes.HOST} />
+      <div className={styles.buttonContainer}>
+        <Button onClick={() => handleRoomJoin(true)} buttonText={textConst.home.hostButton} type={ButtonTypes.HOST} />
       </div>
     </div>
   );

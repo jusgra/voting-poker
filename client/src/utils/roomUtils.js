@@ -70,3 +70,8 @@ export const figureOutCardShowing = (userInfo, isCardsRevealed) => {
   }
   return "yet to vote";
 };
+
+export const checkIfHostLeft = ({ roomInfo, usersInRoom }, callbackLeave) => {
+  const isHostPresent = usersInRoom.some((single) => single.id === roomInfo.hostId);
+  if (!isHostPresent) callbackLeave({ wasDisconnected: true });
+};
