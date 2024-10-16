@@ -1,0 +1,29 @@
+.button-container {
+  display: flex;
+  padding: 5px;
+  cursor: pointer;
+  border: 0;
+  border-radius: 6px;
+  background-color: #640d6085;
+  transition: background-color 0.2s ease-in-out;
+  color: #ecdfcc;
+
+  &:hover {
+    background-color: #640d60b2;
+  }
+
+  & .button-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  & .button-icon {
+    margin-right: 5px;
+    height: 100%;
+  }
+
+  & .button-text {
+    font-weight: bold;
+    font-size: 18px;
+  }
+}

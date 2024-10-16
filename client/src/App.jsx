@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-import Home from "./components/Home.jsx";
+import Home from "./components/Home/Home.jsx";
 import Room from "./components/Room.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState } from "react";

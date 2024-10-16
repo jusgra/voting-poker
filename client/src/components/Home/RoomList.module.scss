@@ -1,0 +1,57 @@
+.header {
+  text-align: center;
+  font-size: 28px;
+  color: #697565;
+}
+
+.table-container {
+  border: 1px solid gray;
+  border-radius: 8px;
+  min-height: 106px;
+  position: relative;
+
+  &-no-rooms {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.room-list {
+  padding: 0 60px;
+  margin: 0;
+}
+
+.no-rooms {
+  text-align: center;
+  color: #c96868;
+  font-size: 34px;
+}
+
+.room-wrapper {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  color: #640d5f;
+  margin: 10px 0;
+}
+
+.room-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 20px;
+}
+
+.room-icon {
+  margin-right: 20px;
+}
+
+.icon-no-rooms {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  opacity: 0.3;
+}

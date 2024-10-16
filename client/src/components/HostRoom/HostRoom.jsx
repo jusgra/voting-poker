@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { figureOutCardShowing, getCardAvg } from "./roomUtils";
+import { figureOutCardShowing, getCardAvg } from "../../utils/roomUtils";
+import styles from "./HostRoom.module.scss";
+import Button from "../Button/Button";
+import { ButtonTypes } from "../../utils/ButtonTypes";
+import { textConst } from "../../utils/constants";
 
 export default function HostRoom({ socket, roomData, handleLeave, isCardsRevealed }) {
   const { id: roomId } = useParams();
   const username = sessionStorage.getItem("username");
 
   if (!username) console.log("WHATS YOUR NAME");
-
-  console.log(roomData);
 
   const handleReveal = () => {
     if (isCardsRevealed) {
@@ -19,14 +21,23 @@ export default function HostRoom({ socket, roomData, handleLeave, isCardsReveale
   };
 
   useEffect(() => {
-    // socket.emit("ask-to-join", { roomId: "qwerty", isHosting: true });
     socket.emit("join-room", { roomId, username });
   }, []);
 
   return (
-    <>
-      <h1>You are a HOST</h1>
-      <button onClick={handleLeave}>BACK HOME</button>
+    <div className={styles.roomContainer}>
+      <div className={styles.roomInfoHeader}>
+        <span>room id = {roomId}</span>
+        <span>6 users in room</span>
+        <Button
+          onClick={handleLeave}
+          styling={styles.backButton}
+          buttonText={textConst.room.leave}
+          type={ButtonTypes.LEAVE}
+        />
+        <span className={styles.roomName}>{username}</span>
+      </div>
+
       {isCardsRevealed ? (
         <button onClick={handleReveal}>Reset Cards</button>
       ) : (
@@ -35,9 +46,9 @@ export default function HostRoom({ socket, roomData, handleLeave, isCardsReveale
 
       <h1>your id = {socket.id}</h1>
       <h1>your name = {username}</h1>
-      {roomData.usersInRoom.map((userInfo) => {
+      {roomData.usersInRoom.map((userInfo, index) => {
         return (
-          <div>
+          <div key={index}>
             {roomData.roomInfo.hostId !== userInfo.id && (
               <span>
                 {userInfo.username} {userInfo.id} = {figureOutCardShowing(userInfo, isCardsRevealed)}
@@ -47,6 +58,6 @@ export default function HostRoom({ socket, roomData, handleLeave, isCardsReveale
         );
       })}
       {isCardsRevealed && getCardAvg(roomData)}
-    </>
+    </div>
   );
 }

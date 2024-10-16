@@ -13,10 +13,10 @@ export const socketIoLogic = (server) => {
 
   let hostedRooms = [];
   // {
-  //  roomId: string,
-  //  hostId: string,
-  //  hostUsername: string,
-  //  areCardsRevealed: boolean
+  //   roomId: string,
+  //   hostId: string,
+  //   hostUsername: string,
+  //   areCardsRevealed: boolean
   // }
 
   io.on("connection", (socket) => {

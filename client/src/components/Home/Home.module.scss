@@ -1,0 +1,64 @@
+html {
+  font-family: "Montserrat", sans-serif;
+  background-color: #ecdfcc;
+  //
+}
+
+.home-container {
+  padding-top: 100px;
+  max-width: 600px;
+  margin: auto;
+}
+
+// body {
+//
+// }
+
+.username-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.username-input {
+  background-color: transparent;
+  font-size: 38px;
+  text-align: center;
+  width: 50%;
+  height: 50px;
+  border: 0;
+  box-sizing: border-box;
+  border-bottom: 1px solid #697565;
+  color: #3c3d37;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: #697565;
+    opacity: 0.3;
+  }
+}
+
+.name-question {
+  color: red;
+}
+
+.button-rng {
+  height: 20px;
+  width: 90%;
+}
+
+.room-list-wrapper {
+  margin-top: 50px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.toast-class {
+  font-size: 16px;
+}

@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import React from "react";
-import HostRoom from "./HostRoom";
+import HostRoom from "./HostRoom/HostRoom";
 import GuestRoom from "./GuestRoom";
+import { checkIfHostLeft } from "../utils/roomUtils";
 
 export default function Room({ socket }) {
   const { id: roomId } = useParams();
@@ -12,16 +13,16 @@ export default function Room({ socket }) {
   const [roomData, setRoomData] = useState({ roomInfo: {}, usersInRoom: [] });
   const [isCardsRevealed, setIsCardsRevealed] = useState(false);
 
-  const handleLeave = () => {
+  const handleLeave = ({ wasDisconnected }) => {
     socket.emit("leave-room", roomId);
-    navigator("/");
+    navigator("/", { state: { disconnected: wasDisconnected } });
   };
 
   useEffect(() => {
     socket.on("update-room-data", (data) => {
-      console.log(data);
       setIsCardsRevealed(data?.roomInfo?.areCardsRevealed || false);
       setRoomData(data);
+      checkIfHostLeft(data, handleLeave);
     });
 
     // socket.on("card-reveal-toggle", () => {
