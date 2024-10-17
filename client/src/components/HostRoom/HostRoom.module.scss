@@ -1,4 +1,29 @@
-.room-container {
+.top-bar-container {
+  justify-content: space-between;
+  color: #ecdfcc;
+  font-size: 24px;
+}
+
+.left-side {
+  display: flex;
+  align-items: center;
+
+  .room-id {
+    font-size: 8px;
+  }
+}
+
+.right-side {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  // margin-right: 5%;
+  fill: #ecdfcc;
+}
+
+.username {
+  color: #ecdfcc;
+  margin-right: 16px;
 }
 
 .room-info-header {
@@ -13,5 +38,5 @@
 }
 
 .back-button {
-  background-color: rgba(38, 0, 255, 0.521);
+  background-color: #640d6085;
 }

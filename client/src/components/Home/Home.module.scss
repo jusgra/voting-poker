@@ -1,7 +1,13 @@
 html {
   font-family: "Montserrat", sans-serif;
   background-color: #ecdfcc;
-  //
+}
+
+.top-text {
+  color: #ecdfcc;
+  font-size: 40px;
+  font-weight: bold;
+  // margin-left: 5%;
 }
 
 .home-container {
@@ -9,10 +15,6 @@ html {
   max-width: 600px;
   margin: auto;
 }
-
-// body {
-//
-// }
 
 .username-wrapper {
   display: flex;

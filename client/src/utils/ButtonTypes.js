@@ -4,4 +4,5 @@ export const ButtonTypes = {
   LEAVE: "LEAVE",
   REVEAL: "REVEAL",
   RESET: "RESET",
+  COPY: "COPY",
 };
