@@ -13,7 +13,7 @@ export const textConst = {
     },
   },
   room: {
-    leave: "Back to Lobby",
+    leave: "Leave Room",
   },
 };
 

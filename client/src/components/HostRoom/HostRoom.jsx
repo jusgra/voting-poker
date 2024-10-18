@@ -5,6 +5,10 @@ import styles from "./HostRoom.module.scss";
 import Button from "../Button/Button";
 import { ButtonTypes } from "../../utils/ButtonTypes";
 import { textConst } from "../../utils/constants";
+import TopBar from "../TopBar/TopBar";
+import IconPersonBadge from "../Icons/IconPersonBadge";
+import IconRoom from "../Icons/IconRoom";
+import IconCopy from "../Icons/IconCopy";
 
 export default function HostRoom({ socket, roomData, handleLeave, isCardsRevealed }) {
   const { id: roomId } = useParams();
@@ -20,23 +24,42 @@ export default function HostRoom({ socket, roomData, handleLeave, isCardsReveale
     socket.emit("card-reveal-toggle", { roomId, action: "REVEAL" });
   };
 
+  console.log(roomData);
+
   useEffect(() => {
     socket.emit("join-room", { roomId, username });
   }, []);
 
   return (
     <div className={styles.roomContainer}>
-      <div className={styles.roomInfoHeader}>
-        <span>room id = {roomId}</span>
-        <span>6 users in room</span>
-        <Button
-          onClick={handleLeave}
-          styling={styles.backButton}
-          buttonText={textConst.room.leave}
-          type={ButtonTypes.LEAVE}
-        />
-        <span className={styles.roomName}>{username}</span>
-      </div>
+      <TopBar styling={styles.topBarContainer}>
+        <div className={styles.leftSide}>
+          <IconRoom sizeInPx={26} />
+          <span>{roomData.roomInfo.hostUsername} room</span>
+          <span>
+            <Button />
+            <IconCopy sizeInPx={24} />
+          </span>
+          {/* <span className={styles.roomId}><{roomId}></span> */}
+        </div>
+        <div>
+          <span>6 users in room</span>
+        </div>
+
+        <div className={styles.rightSide}>
+          <IconPersonBadge sizeInPx={26} />
+
+          <span className={styles.username}>{username}</span>
+
+          <Button
+            onClick={handleLeave}
+            styling={styles.backButton}
+            buttonText={textConst.room.leave}
+            type={ButtonTypes.LEAVE}
+          />
+        </div>
+      </TopBar>
+      <div className={styles.roomInfoHeader}></div>
 
       {isCardsRevealed ? (
         <button onClick={handleReveal}>Reset Cards</button>

@@ -11,6 +11,7 @@ import { getUsername } from "../../utils/roomUtils";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TopBar from "../TopBar/TopBar";
 
 export default function Home({ socket }) {
   const [hostedRooms, setHostedRooms] = useState([]);
@@ -71,6 +72,10 @@ export default function Home({ socket }) {
   return (
     <div className={styles.homeContainer}>
       <ToastContainer />
+      <TopBar>
+        <div className={styles.topText}>Lobby</div>
+      </TopBar>
+
       <div className={styles.usernameWrapper}>
         <input
           className={styles.usernameInput}
@@ -79,7 +84,6 @@ export default function Home({ socket }) {
           value={usernameValue}
         ></input>
       </div>
-
       <div className={styles.roomListWrapper}>
         <RoomsList hostedRooms={hostedRooms} roomClick={(id) => handleRoomJoin(false, id)} />
       </div>
