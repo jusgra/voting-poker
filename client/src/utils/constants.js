@@ -1,4 +1,4 @@
-// import styles from "./Home.module.scss";
+import styles from "../components/Home/Home.module.scss"
 
 export const textConst = {
   home: {
@@ -10,15 +10,16 @@ export const textConst = {
     toasts: {
       whatsYourName: "Please let us know your name",
       hostLeft: "Host has left the room, you were disconnected",
+      copySuccess: "Copy link has been copied to your clipboard"
     },
   },
   room: {
     leave: "Leave Room",
+    copy: "Copy Invite Link"
   },
 };
 
 export const toastSettings = {
-  className: { fontSize: "16px" },
   position: "top-center",
   autoClose: 3000,
   closeOnClick: true,

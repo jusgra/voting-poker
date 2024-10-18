@@ -4,6 +4,8 @@ import React from "react";
 import HostRoom from "./HostRoom/HostRoom";
 import GuestRoom from "./GuestRoom";
 import { checkIfHostLeft } from "../utils/roomUtils";
+import {ToastContainer} from "react-toastify";
+import styles from "./Home/Home.module.scss";
 
 export default function Room({ socket }) {
   const { id: roomId } = useParams();
@@ -35,9 +37,12 @@ export default function Room({ socket }) {
     };
   });
 
-  return isUserHost ? (
-    <HostRoom socket={socket} roomData={roomData} isCardsRevealed={isCardsRevealed} handleLeave={handleLeave} />
-  ) : (
-    <GuestRoom socket={socket} roomData={roomData} isCardsRevealed={isCardsRevealed} handleLeave={handleLeave} />
-  );
+  return <>
+    <ToastContainer className={styles.toastClass}/>
+    {isUserHost ? (
+        <HostRoom socket={socket} roomData={roomData} isCardsRevealed={isCardsRevealed} handleLeave={handleLeave} />
+    ) : (
+        <GuestRoom socket={socket} roomData={roomData} isCardsRevealed={isCardsRevealed} handleLeave={handleLeave} />
+    )}
+  </>
 }

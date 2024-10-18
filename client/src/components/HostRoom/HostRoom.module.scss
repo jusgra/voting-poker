@@ -7,11 +7,29 @@
 .left-side {
   display: flex;
   align-items: center;
+  gap: 16px;
 
   .room-id {
     font-size: 8px;
   }
+
+  .host-username {
+    margin-right: 16px;
+  }
+
+
 }
+.middle {
+  display: flex;
+  align-items: center;
+
+  .users-number {
+    font-weight: bold;
+    font-size: 50px;
+    margin-left: 16px;
+  }
+}
+
 
 .right-side {
   display: flex;

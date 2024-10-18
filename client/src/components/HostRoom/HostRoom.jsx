@@ -4,11 +4,11 @@ import { figureOutCardShowing, getCardAvg } from "../../utils/roomUtils";
 import styles from "./HostRoom.module.scss";
 import Button from "../Button/Button";
 import { ButtonTypes } from "../../utils/ButtonTypes";
-import { textConst } from "../../utils/constants";
+import {textConst, toastSettings} from "../../utils/constants";
 import TopBar from "../TopBar/TopBar";
 import IconPersonBadge from "../Icons/IconPersonBadge";
 import IconRoom from "../Icons/IconRoom";
-import IconCopy from "../Icons/IconCopy";
+import {toast} from "react-toastify";
 
 export default function HostRoom({ socket, roomData, handleLeave, isCardsRevealed }) {
   const { id: roomId } = useParams();
@@ -30,24 +30,27 @@ export default function HostRoom({ socket, roomData, handleLeave, isCardsReveale
     socket.emit("join-room", { roomId, username });
   }, []);
 
+  const handleCopyClick = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      toast.info(textConst.home.toasts.copySuccess, {...toastSettings, hideProgressBar: true, autoClose: 1000});
+    });
+  }
+
   return (
     <div className={styles.roomContainer}>
       <TopBar styling={styles.topBarContainer}>
         <div className={styles.leftSide}>
-          <IconRoom sizeInPx={26} />
-          <span>{roomData.roomInfo.hostUsername} room</span>
-          <span>
-            <Button />
-            <IconCopy sizeInPx={24} />
-          </span>
-          {/* <span className={styles.roomId}><{roomId}></span> */}
+          <Button onClick={handleCopyClick} buttonText={textConst.room.copy} type={ButtonTypes.COPY}/>
+          <IconRoom sizeInPx={36} />
+          <span className={styles.hostUsername}>{roomData.roomInfo.hostUsername} room</span>
         </div>
-        <div>
-          <span>6 users in room</span>
+        <div className={styles.middle}>
+          <span>users in room: </span>
+          <span className={styles.usersNumber}>{roomData.usersInRoom.length}</span>
         </div>
 
         <div className={styles.rightSide}>
-          <IconPersonBadge sizeInPx={26} />
+          <IconPersonBadge sizeInPx={36} />
 
           <span className={styles.username}>{username}</span>
 
@@ -59,7 +62,6 @@ export default function HostRoom({ socket, roomData, handleLeave, isCardsReveale
           />
         </div>
       </TopBar>
-      <div className={styles.roomInfoHeader}></div>
 
       {isCardsRevealed ? (
         <button onClick={handleReveal}>Reset Cards</button>

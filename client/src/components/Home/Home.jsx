@@ -71,7 +71,7 @@ export default function Home({ socket }) {
 
   return (
     <div className={styles.homeContainer}>
-      <ToastContainer />
+      <ToastContainer className={styles.toastClass}/>
       <TopBar>
         <div className={styles.topText}>Lobby</div>
       </TopBar>
