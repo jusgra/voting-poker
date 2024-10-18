@@ -1,5 +1,3 @@
-import styles from "../components/Home/Home.module.scss"
-
 export const textConst = {
   home: {
     placeholder: "What is your name?",
