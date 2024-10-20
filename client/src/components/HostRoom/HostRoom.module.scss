@@ -27,6 +27,11 @@
 .middle {
   display: flex;
   align-items: center;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  justify-content: center;
+  z-index: -1;
 
   .users-number {
     font-weight: bold;
@@ -84,9 +89,23 @@
 }
 
 .wrapper-container {
-  min-height: 300px;
+  min-height: 156px;
   border: 1px solid gray;
   border-radius: 8px;
+}
+
+.empty-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .url {
+    font-size: 24px;
+  }
+  .button {
+    margin-top: 8px;
+  }
 }
 
 .users-container {
@@ -113,10 +132,7 @@
 
 .card-wrapper {
   width: 80px;
-  // margin: 10px;
   height: 100px;
-  // background-color: white;
-
   border: 2px solid #adadad;
   border-radius: 8px;
   display: flex;
@@ -144,6 +160,12 @@
   padding: 10px;
   display: flex;
   justify-content: space-around;
+  align-items: center;
+
+  &.empty {
+    justify-content: center;
+    text-align: center;
+  }
 }
 
 .single-result {
@@ -158,11 +180,22 @@
 }
 
 .average-container {
-  font-size: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  .text {
+    font-size: 24px;
+  }
+
+  .number {
+    font-size: 50px;
+  }
+
+  .no-votes {
+    font-size: 24px;
+  }
 }
 
 .divider {
@@ -173,7 +206,7 @@
 .result-card {
   height: 30px;
   width: 24px;
-  border: 1px solid #adadad;
+  border: 1px solid #7f7f7f;
   border-radius: 4px;
   display: flex;
   align-items: center;

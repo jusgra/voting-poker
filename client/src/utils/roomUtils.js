@@ -1,3 +1,6 @@
+import { textConst } from "./constants";
+import { replacePlaceholders } from "./utilFunctions";
+
 export const CARD_CONSTS = {
   SHOW_CARD: "SHOW_CARD",
   VOTED: "VOTED",
@@ -11,24 +14,16 @@ export const getCardAvg = (roomData) => {
     if (singleUser.card) cards.push(+singleUser.card);
   }
 
-  // console.log(cards);
-
-  // console.log("cards - " + cards);
   const filteredCards = cards.filter((single) => {
     return single !== null && !isNaN(single);
   });
 
   const avg =
     filteredCards.reduce((accum, single) => {
-      // console.log(single);
-      // console.log("accum - " + accum);
-
       return !isNaN(single) && accum + single;
     }, 0) / filteredCards.length;
 
-  // console.log(avg);
-
-  return Math.round(avg * 10) / 10 || "no one voted :/";
+  return Math.round(avg * 10) / 10;
 };
 
 export const getUsername = () => {
@@ -97,7 +92,6 @@ export const getSortedResults = (roomData) => {
       else frequencyObject[user.card] = 1;
     }
   });
-
   return frequencyObject;
 };
 
@@ -106,7 +100,10 @@ export const getStringWhoLeftToVote = (roomData) => {
     if (!single.card) return single.id !== roomData.roomInfo.hostId;
   });
 
-  if (playersThatDidNotVote.length > 1) return `Waiting for ${playersThatDidNotVote.length} players to vote`;
-  if (playersThatDidNotVote.length === 1) return `Waiting for ${playersThatDidNotVote[0].username} to vote`;
-  return "Everyone has voted";
+  if (playersThatDidNotVote.length > 1)
+    return replacePlaceholders(textConst.room.header.waitingForMany, playersThatDidNotVote.length);
+  if (playersThatDidNotVote.length === 1)
+    return replacePlaceholders(textConst.room.header.waitingForOne, playersThatDidNotVote[0].username);
+  if (roomData.usersInRoom.length <= 1) return textConst.room.header.roomEmpty;
+  return textConst.room.header.allVoted;
 };

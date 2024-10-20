@@ -29,7 +29,7 @@ export const socketIoLogic = (server) => {
     });
 
     socket.on("get-hosted-rooms", () => {
-      io.to(socket.id).emit("room-created", hostedRooms);
+      io.to(socket.id).emit("update-room-list", hostedRooms);
     });
 
     socket.on("card-reveal-toggle", async ({ roomId }) => {
@@ -48,24 +48,17 @@ export const socketIoLogic = (server) => {
       io.to(roomId).emit("update-room-data", await getRoomUsersData(roomId));
     });
 
-    socket.on("ask-to-join", ({ roomId, isHosting, username }) => {
-      if (isHosting) {
-        //user allowed to host
-        console.log("hosting");
-
-        io.to(socket.id).emit("join-allowed", roomId);
-        hostedRooms.push({ roomId: roomId, hostId: socket.id, hostUsername: username, areCardsRevealed: false });
-        io.emit("room-created", hostedRooms);
-        return;
-      }
+    socket.on("check-room", async (roomId) => {
       if (hostedRooms.some((room) => room.roomId === roomId)) {
-        console.log("joining");
-
-        //user allowed to join hosted room
-        io.to(socket.id).emit("join-allowed", roomId);
+        io.to(socket.id).emit("check-room-response", { isAllowedToJoin: true });
         return;
       }
-      io.to(socket.id).emit("error", "Room is not hosted");
+      io.to(socket.id).emit("check-room-response", { isAllowedToJoin: false });
+    });
+
+    socket.on("host-room", async ({ roomId, username }) => {
+      hostedRooms.push({ roomId: roomId, hostId: socket.id, hostUsername: username, areCardsRevealed: false });
+      io.emit("update-room-list", hostedRooms);
     });
 
     socket.on("join-room", async ({ roomId, username }) => {
@@ -105,7 +98,7 @@ export const socketIoLogic = (server) => {
   const updateHostedRoomsList = (socket, roomId) => {
     if (hostedRooms.some((room) => room.hostId === socket.id)) {
       hostedRooms = hostedRooms.filter((single) => single.roomId !== roomId);
-      io.emit("room-created", hostedRooms);
+      io.emit("update-room-list", hostedRooms);
     }
   };
 

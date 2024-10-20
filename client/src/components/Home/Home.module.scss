@@ -7,7 +7,6 @@ html {
   color: #ecdfcc;
   font-size: 40px;
   font-weight: bold;
-  // margin-left: 5%;
 }
 
 .home-container {
@@ -39,6 +38,7 @@ html {
   &::placeholder {
     color: #697565;
     opacity: 0.3;
+    font-size: 30px;
   }
 }
 

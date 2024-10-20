@@ -12,6 +12,15 @@
     background-color: #640d60b2;
   }
 
+  &.disabled {
+    cursor: not-allowed;
+    background-color: #bfbfbf85;
+
+    &:hover {
+      background-color: #bfbfbf85;
+    }
+  }
+
   & .button-wrapper {
     display: flex;
     align-items: center;

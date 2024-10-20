@@ -21,7 +21,6 @@ export default function Home({ socket }) {
 
   const handleChange = (e) => {
     setUsernameValue(e.target.value);
-    sessionStorage.setItem("username", e.target.value);
   };
 
   const handleRoomJoin = (isHostingRoom, clickedRoomId) => {
@@ -30,42 +29,39 @@ export default function Home({ socket }) {
       return;
     }
     sessionStorage.setItem("isUserHost", isHostingRoom);
+    sessionStorage.setItem("username", usernameValue);
+
     const roomId = isHostingRoom ? uuidv4() : clickedRoomId;
-    socket.emit("ask-to-join", { roomId, isHosting: isHostingRoom, username: usernameValue });
+    if (isHostingRoom) {
+      socket.emit("host-room", { roomId, username: usernameValue });
+    }
+    navigator(`/room/${roomId}`);
   };
-
-  useEffect(() => {
-    socket.on("join-allowed", (data) => {
-      sessionStorage.setItem("username", usernameValue);
-      navigator(`/room/${data}`);
-    });
-
-    socket.on("error", (response) => {
-      toast.error(response, toastSettings);
-    });
-
-    socket.on("room-created", (data) => {
-      setHostedRooms(data);
-    });
-
-    return () => {
-      socket.off("join-allowed");
-      socket.off("error");
-      socket.off("room-created");
-    };
-  }, []);
 
   useEffect(() => {
     socket.emit("get-hosted-rooms");
 
-    let timeoutId;
+    socket.on("update-room-list", (data) => {
+      setHostedRooms(data);
+    });
 
-    if (location.state?.disconnected) {
+    return () => {
+      socket.off("update-room-list");
+    };
+  }, []);
+
+  useEffect(() => {
+    let timeoutId;
+    const { gotDisconnected, roomNotHosted } = location.state || {};
+
+    if (gotDisconnected || roomNotHosted) {
       timeoutId = setTimeout(() => {
-        toast.warning(textConst.home.toasts.hostLeft, toastSettings);
-        navigator(".", { replace: true, state: { disconnected: false } });
+        const message = gotDisconnected ? textConst.home.toasts.hostLeft : textConst.home.toasts.noRoom;
+        toast.warning(message, toastSettings);
+        navigator(".", { replace: true, state: { gotDisconnected: false, roomNotHosted: false } });
       }, 500);
     }
+
     return () => clearTimeout(timeoutId);
   }, []);
 

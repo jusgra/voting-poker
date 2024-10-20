@@ -9,6 +9,8 @@
   border-radius: 8px;
   min-height: 106px;
   position: relative;
+  display: flex;
+  align-items: center;
 
   &-no-rooms {
     display: flex;
@@ -20,6 +22,7 @@
 .room-list {
   padding: 0 60px;
   margin: 0;
+  width: 100%;
 }
 
 .no-rooms {
