@@ -8,12 +8,15 @@ export const textConst = {
     toasts: {
       whatsYourName: "Please let us know your name",
       hostLeft: "Host has left the room, you were disconnected",
-      copySuccess: "Copy link has been copied to your clipboard"
+      copySuccess: "Copy link has been copied to your clipboard",
     },
   },
   room: {
     leave: "Leave Room",
-    copy: "Copy Invite Link"
+    copy: "Copy Invite Link",
+    participants: "Participants:",
+    reveal: "Reveal votes",
+    reset: "Reset cards",
   },
 };
 
@@ -24,3 +27,5 @@ export const toastSettings = {
   pauseOnHover: false,
   draggable: false,
 };
+
+export const CARDS = [1, 2, 3, 5, 8, 13, "?"];

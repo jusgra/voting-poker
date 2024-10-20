@@ -3,6 +3,8 @@ import IconHost from "../components/Icons/IconHost";
 import IconJoin from "../components/Icons/IconJoin";
 import IconLeave from "../components/Icons/IconLeave";
 import IconCopy from "../components/icons/IconCopy";
+import IconReveal from "../components/Icons/IconReveal";
+import IconReset from "../components/Icons/IconReset";
 
 export const composeClassName = (...classes) => {
   return classes.filter(Boolean).join(" ");
@@ -19,9 +21,9 @@ export const getButtonIcon = (type, styling) => {
     case ButtonTypes.COPY:
       return <IconCopy sizeInPx={22} styling={styling} />;
     case ButtonTypes.REVEAL:
-      return <IconLeave sizeInPx={24} styling={styling} />;
+      return <IconReveal sizeInPx={24} styling={styling} />;
     case ButtonTypes.RESET:
-      return <IconLeave sizeInPx={24} styling={styling} />;
+      return <IconReset sizeInPx={24} styling={styling} />;
     default:
       return;
   }

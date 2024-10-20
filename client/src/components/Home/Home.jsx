@@ -21,6 +21,7 @@ export default function Home({ socket }) {
 
   const handleChange = (e) => {
     setUsernameValue(e.target.value);
+    sessionStorage.setItem("username", e.target.value);
   };
 
   const handleRoomJoin = (isHostingRoom, clickedRoomId) => {
@@ -30,7 +31,6 @@ export default function Home({ socket }) {
     }
     sessionStorage.setItem("isUserHost", isHostingRoom);
     const roomId = isHostingRoom ? uuidv4() : clickedRoomId;
-
     socket.emit("ask-to-join", { roomId, isHosting: isHostingRoom, username: usernameValue });
   };
 
@@ -41,7 +41,7 @@ export default function Home({ socket }) {
     });
 
     socket.on("error", (response) => {
-      alert(response);
+      toast.error(response, toastSettings);
     });
 
     socket.on("room-created", (data) => {
@@ -53,7 +53,7 @@ export default function Home({ socket }) {
       socket.off("error");
       socket.off("room-created");
     };
-  });
+  }, []);
 
   useEffect(() => {
     socket.emit("get-hosted-rooms");
@@ -71,7 +71,7 @@ export default function Home({ socket }) {
 
   return (
     <div className={styles.homeContainer}>
-      <ToastContainer className={styles.toastClass}/>
+      <ToastContainer className={styles.toastClass} />
       <TopBar>
         <div className={styles.topText}>Lobby</div>
       </TopBar>

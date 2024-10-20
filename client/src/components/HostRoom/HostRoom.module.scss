@@ -1,3 +1,9 @@
+.room-container {
+  padding-top: 100px;
+  max-width: 800px;
+  margin: auto;
+}
+
 .top-bar-container {
   justify-content: space-between;
   color: #ecdfcc;
@@ -8,6 +14,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  font-size: 24px;
 
   .room-id {
     font-size: 8px;
@@ -16,8 +23,6 @@
   .host-username {
     margin-right: 16px;
   }
-
-
 }
 .middle {
   display: flex;
@@ -30,21 +35,16 @@
   }
 }
 
-
 .right-side {
   display: flex;
   align-items: center;
   font-size: 24px;
-  // margin-right: 5%;
   fill: #ecdfcc;
-}
 
-.username {
-  color: #ecdfcc;
-  margin-right: 16px;
-}
-
-.room-info-header {
+  .username {
+    color: #ecdfcc;
+    margin-right: 16px;
+  }
 }
 
 .room-header {
@@ -57,4 +57,126 @@
 
 .back-button {
   background-color: #640d6085;
+}
+
+.left-to-vote {
+  text-align: center;
+}
+
+.reveal-button {
+  width: 100%;
+  justify-content: center;
+  background-color: #25872596;
+
+  &:hover {
+    background-color: #258725d0;
+  }
+}
+
+.reset-button {
+  width: 100%;
+  justify-content: center;
+  background-color: #ff5858;
+
+  &:hover {
+    background-color: #ff2727;
+  }
+}
+
+.wrapper-container {
+  min-height: 300px;
+  border: 1px solid gray;
+  border-radius: 8px;
+}
+
+.users-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 10px 10px 0;
+}
+
+.user-wrapper {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  .username {
+    position: absolute;
+    top: -20px;
+    margin: 0 0 4px;
+  }
+}
+
+.card-wrapper {
+  width: 80px;
+  // margin: 10px;
+  height: 100px;
+  // background-color: white;
+
+  border: 2px solid #adadad;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 50px;
+
+  &.voted {
+    background-color: #46ff656e;
+  }
+
+  &.didnt-vote {
+    background-color: #ff565682;
+  }
+
+  .user-skipped {
+    margin-top: 8px;
+    text-align: center;
+    font-size: 12px;
+  }
+}
+
+.result-container {
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.single-result {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+
+  .result-value {
+    font-weight: bold;
+    font-size: 22px;
+  }
+}
+
+.average-container {
+  font-size: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.divider {
+  height: 1px;
+  background-color: gray;
+}
+
+.result-card {
+  height: 30px;
+  width: 24px;
+  border: 1px solid #adadad;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
 }

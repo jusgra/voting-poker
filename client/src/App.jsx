@@ -2,7 +2,7 @@ import io from "socket.io-client";
 import Home from "./components/Home/Home.jsx";
 import Room from "./components/Room.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 
 const socket = io.connect("http://localhost:3001");
@@ -13,6 +13,19 @@ const App = () => {
   socket.on("connect", () => {
     setUserId(socket.id);
   });
+
+  useEffect(() => {
+    const handlePopState = () => {
+      console.log("Back button clicked!");
+      socket.emit("leave-all-rooms");
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
 
   return (
     <Router>

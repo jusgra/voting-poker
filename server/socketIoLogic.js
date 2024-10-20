@@ -25,7 +25,6 @@ export const socketIoLogic = (server) => {
 
     socket.on("card-pick", async ({ roomId, pickedCard }) => {
       socket.card = pickedCard;
-
       io.to(roomId).emit("update-room-data", await getRoomUsersData(roomId));
     });
 
@@ -33,15 +32,13 @@ export const socketIoLogic = (server) => {
       io.to(socket.id).emit("room-created", hostedRooms);
     });
 
-    socket.on("card-reveal-toggle", async ({ roomId, action }) => {
+    socket.on("card-reveal-toggle", async ({ roomId }) => {
       for (const room of hostedRooms) {
         if (room.roomId === roomId) {
           if (room.areCardsRevealed) {
             room.areCardsRevealed = false;
             const sockets = await io.in(roomId).fetchSockets();
-            for (const socket of sockets) {
-              socket.card = "";
-            }
+            for (const socket of sockets) socket.card = "";
           } else {
             room.areCardsRevealed = true;
           }
@@ -54,24 +51,26 @@ export const socketIoLogic = (server) => {
     socket.on("ask-to-join", ({ roomId, isHosting, username }) => {
       if (isHosting) {
         //user allowed to host
+        console.log("hosting");
+
         io.to(socket.id).emit("join-allowed", roomId);
         hostedRooms.push({ roomId: roomId, hostId: socket.id, hostUsername: username, areCardsRevealed: false });
         io.emit("room-created", hostedRooms);
         return;
       }
       if (hostedRooms.some((room) => room.roomId === roomId)) {
+        console.log("joining");
+
         //user allowed to join hosted room
         io.to(socket.id).emit("join-allowed", roomId);
         return;
       }
-
       io.to(socket.id).emit("error", "Room is not hosted");
     });
 
     socket.on("join-room", async ({ roomId, username }) => {
       socket.join(roomId);
       socket.username = username;
-
       io.to(roomId).emit("update-room-data", await getRoomUsersData(roomId));
     });
 
@@ -79,26 +78,36 @@ export const socketIoLogic = (server) => {
       socket.leave(roomId);
       socket.card = "";
       io.to(roomId).emit("update-room-data", await getRoomUsersData(roomId));
+      updateHostedRoomsList(socket, roomId);
+    });
 
-      if (hostedRooms.some((room) => room.hostId === socket.id)) {
-        hostedRooms = hostedRooms.filter((single) => single.roomId !== roomId);
-        io.emit("room-created", hostedRooms);
-      }
+    socket.on("leave-all-rooms", async () => {
+      socket.card = "";
+      await leaveAllRooms(socket);
+      socket.join(socket.id);
     });
 
     socket.on("disconnecting", async () => {
       socket.card = "";
       socket.username = "";
-      for (const roomId of socket.rooms) {
-        socket.leave(roomId);
-        io.to(roomId).emit("update-room-data", await getRoomUsersData(roomId));
-        if (hostedRooms.some((room) => room.hostId === socket.id)) {
-          hostedRooms = hostedRooms.filter((single) => single.roomId !== roomId);
-          io.emit("room-created", hostedRooms);
-        }
-      }
+      await leaveAllRooms(socket);
     });
   });
+
+  const leaveAllRooms = async (socket) => {
+    for (const roomId of socket.rooms) {
+      socket.leave(roomId);
+      io.to(roomId).emit("update-room-data", await getRoomUsersData(roomId));
+      updateHostedRoomsList(socket, roomId);
+    }
+  };
+
+  const updateHostedRoomsList = (socket, roomId) => {
+    if (hostedRooms.some((room) => room.hostId === socket.id)) {
+      hostedRooms = hostedRooms.filter((single) => single.roomId !== roomId);
+      io.emit("room-created", hostedRooms);
+    }
+  };
 
   const getRoomUsersData = async (roomId) => {
     const userIds = io.sockets.adapter.rooms.get(roomId);
@@ -109,8 +118,6 @@ export const socketIoLogic = (server) => {
     const usersInRoom = sockets.map((single) => {
       return { id: single.id, username: single.username, card: single.card };
     });
-
-    console.log(hostedRooms);
 
     const singleHostedRoom = hostedRooms.filter((single) => single.roomId === roomId);
 

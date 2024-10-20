@@ -1,27 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { figureOutCardShowing, getCardAvg } from "../utils/roomUtils";
 import { useParams } from "react-router-dom";
+import { CARDS } from "../utils/constants";
 
 export default function GuestRoom({ socket, roomData, handleLeave, isCardsRevealed }) {
-  const CARDS = [1, 2, 3, 5, 8, 13, "?"];
   const username = sessionStorage.getItem("username");
+
   const { id: roomId } = useParams();
 
   const handleCardPick = (card) => {
     if (isCardsRevealed) return;
     socket.emit("card-pick", { roomId: roomId.toString(), pickedCard: card.toString() });
   };
-
-  useEffect(() => {
-    if (!username) {
-      const name = prompt("Enter Your Name:");
-      sessionStorage.setItem("username", name);
-      socket.emit("join-room", { roomId, username: name });
-      return;
-    }
-
-    socket.emit("join-room", { roomId, username });
-  }, []);
 
   return (
     <>
