@@ -76,9 +76,9 @@ export default function Room({ socket }) {
 
   const isUserHost = sessionStorage.getItem("isUserHost") === "true";
 
-  const handleLeave = ({ wasDisconnected }) => {
+  const handleLeave = (status) => {
     socket.emit("leave-room", roomId);
-    navigator("/", { state: { gotDisconnected: wasDisconnected } });
+    navigator("/", { state: { gotDisconnected: status?.wasDisconnected } });
   };
   let storageUsername = sessionStorage.getItem("username");
 
