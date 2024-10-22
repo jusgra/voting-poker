@@ -1,0 +1,23 @@
+.left-to-vote {
+  text-align: center;
+}
+
+.reveal-button {
+  width: 100%;
+  justify-content: center;
+  background-color: #25872596;
+
+  &:hover {
+    background-color: #258725d0;
+  }
+}
+
+.reset-button {
+  width: 100%;
+  justify-content: center;
+  background-color: #ff5858;
+
+  &:hover {
+    background-color: #ff2727;
+  }
+}

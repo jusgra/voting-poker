@@ -2,43 +2,22 @@ import React from "react";
 import { figureOutCardShowing, getCardAvg } from "../utils/roomUtils";
 import { useParams } from "react-router-dom";
 import { CARDS } from "../utils/constants";
+import RoomTopBar from "./RoomTopBar/RoomTopBar";
+import UsersCards from "./UsersCards";
+import styles from "./GuestRoom.module.scss";
+import CardSelector from "./CardSelector";
 
-export default function GuestRoom({ socket, roomData, handleLeave, isCardsRevealed }) {
-  const username = sessionStorage.getItem("username");
-
-  const { id: roomId } = useParams();
-
-  const handleCardPick = (card) => {
-    if (isCardsRevealed) return;
-    socket.emit("card-pick", { roomId: roomId.toString(), pickedCard: card.toString() });
-  };
+export default function GuestRoom({ socket, roomData, handleLeave, isCardsRevealed, voteResults }) {
+  console.log(roomData);
 
   return (
     <>
-      <h1>You are a GUEST</h1>
-      <button onClick={handleLeave}>BACK HOME</button>
-      {CARDS.map((single, index) => {
-        return (
-          <button key={index} onClick={() => handleCardPick(single)}>
-            {single}
-          </button>
-        );
-      })}
-      <h1>your id = {socket.id}</h1>
-      <h1>your name = {username}</h1>
-      <h2 style={{ color: "red" }}>HOST IS - {roomData.roomInfo.hostUsername}</h2>
-      {roomData.usersInRoom.map((userInfo, index) => {
-        return (
-          <div key={index}>
-            {roomData.roomInfo.hostId !== userInfo.id && (
-              <span>
-                {userInfo.username} {userInfo.id} = {figureOutCardShowing(userInfo, isCardsRevealed)}
-              </span>
-            )}
-          </div>
-        );
-      })}
-      {isCardsRevealed && getCardAvg(roomData)}
+      <RoomTopBar isHostRoom={false} handleLeave={handleLeave} roomData={roomData} />
+      <div className={styles.roomContainer}>
+        <h1 className={styles.header}>{isCardsRevealed ? "Voting has concluded" : "You can now vote"} </h1>
+        <CardSelector roomData={roomData} isCardsRevealed={isCardsRevealed} socket={socket} />
+        <UsersCards socket={socket} roomData={roomData} isCardsRevealed={isCardsRevealed} voteResults={voteResults} />
+      </div>
     </>
   );
 }

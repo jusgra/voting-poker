@@ -3,11 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import React from "react";
 import HostRoom from "./HostRoom/HostRoom";
 import GuestRoom from "./GuestRoom";
-import { checkIfHostLeft, getStringWhoLeftToVote } from "../utils/roomUtils";
+import { checkIfHostLeft, getSortedResults, getStringWhoLeftToVote } from "../utils/roomUtils";
 import { ToastContainer } from "react-toastify";
 import styles from "./Home/Home.module.scss";
+import RoomTopBar from "./RoomTopBar/RoomTopBar";
 
-export default function Room({ socket }) {
+export default function Room({ socket, userId }) {
   const roomData2 = {
     roomInfo: {
       roomId: "e3de140a-76a1-4da7-91be-e7f9b8036c08",
@@ -68,11 +69,15 @@ export default function Room({ socket }) {
       },
     ],
   };
+
+  console.log(socket.id);
+
   const { id: roomId } = useParams();
   const navigator = useNavigate();
   const [roomData, setRoomData] = useState({ roomInfo: {}, usersInRoom: [] });
   const [isCardsRevealed, setIsCardsRevealed] = useState(false);
   const [leftToVoteString, setLeftToVoteString] = useState("");
+  const [voteResults, setVoteResults] = useState({});
 
   const isUserHost = sessionStorage.getItem("isUserHost") === "true";
 
@@ -103,6 +108,7 @@ export default function Room({ socket }) {
       setRoomData(data);
       setLeftToVoteString(getStringWhoLeftToVote(data));
       checkIfHostLeft(data, handleLeave);
+      setVoteResults(getSortedResults(data));
       //DEV ENV
       // setLeftToVoteString(getStringWhoLeftToVote(roomData));
       // checkIfHostLeft(roomData, handleLeave);
@@ -124,9 +130,16 @@ export default function Room({ socket }) {
           isCardsRevealed={isCardsRevealed}
           handleLeave={handleLeave}
           leftToVoteString={leftToVoteString}
+          voteResults={voteResults}
         />
       ) : (
-        <GuestRoom socket={socket} roomData={roomData} isCardsRevealed={isCardsRevealed} handleLeave={handleLeave} />
+        <GuestRoom
+          socket={socket}
+          roomData={roomData}
+          isCardsRevealed={isCardsRevealed}
+          handleLeave={handleLeave}
+          voteResults={voteResults}
+        />
       )}
     </>
   );
