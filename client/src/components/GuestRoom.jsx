@@ -8,8 +8,6 @@ import styles from "./GuestRoom.module.scss";
 import CardSelector from "./CardSelector";
 
 export default function GuestRoom({ socket, roomData, handleLeave, isCardsRevealed, voteResults }) {
-  console.log(roomData);
-
   return (
     <>
       <RoomTopBar isHostRoom={false} handleLeave={handleLeave} roomData={roomData} />

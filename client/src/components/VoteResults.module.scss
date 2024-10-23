@@ -1,0 +1,58 @@
+.result-container {
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  &.empty {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+.single-result {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+
+  .result-value {
+    font-weight: bold;
+    font-size: 22px;
+  }
+}
+
+.average-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  .text {
+    font-size: 24px;
+  }
+
+  .number {
+    font-size: 50px;
+  }
+
+  .no-votes {
+    font-size: 24px;
+  }
+}
+
+.divider {
+  height: 1px;
+  background-color: gray;
+}
+
+.result-card {
+  height: 30px;
+  width: 24px;
+  border: 1px solid #7f7f7f;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  background: linear-gradient(white, transparent);
+}

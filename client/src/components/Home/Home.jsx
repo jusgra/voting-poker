@@ -28,14 +28,14 @@ export default function Home({ socket }) {
       toast.error(textConst.home.toasts.whatsYourName, toastSettings);
       return;
     }
-    sessionStorage.setItem("isUserHost", isHostingRoom);
+    // sessionStorage.setItem("isUserHost", isHostingRoom);
     sessionStorage.setItem("username", usernameValue);
 
     const roomId = isHostingRoom ? uuidv4() : clickedRoomId;
     if (isHostingRoom) {
       socket.emit("host-room", { roomId, username: usernameValue });
     }
-    navigator(`/room/${roomId}`);
+    navigator(`/room/${roomId}`, { state: { isHosting: isHostingRoom } });
   };
 
   useEffect(() => {

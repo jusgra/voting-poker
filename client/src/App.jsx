@@ -16,7 +16,6 @@ const App = () => {
 
   useEffect(() => {
     const handlePopState = () => {
-      console.log("Back button clicked!");
       socket.emit("leave-all-rooms");
     };
 

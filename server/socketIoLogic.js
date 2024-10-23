@@ -25,7 +25,7 @@ export const socketIoLogic = (server) => {
 
     socket.on("card-pick", async ({ roomId, pickedCard }) => {
       socket.card = pickedCard;
-      io.to(roomId).emit("update-room-data", await getRoomUsersData(roomId));
+      io.to(roomId).emit("update-room-data", await getRoomData(roomId));
     });
 
     socket.on("get-hosted-rooms", () => {
@@ -45,7 +45,7 @@ export const socketIoLogic = (server) => {
         }
       }
 
-      io.to(roomId).emit("update-room-data", await getRoomUsersData(roomId));
+      io.to(roomId).emit("update-room-data", await getRoomData(roomId));
     });
 
     socket.on("check-room", async (roomId) => {
@@ -64,13 +64,14 @@ export const socketIoLogic = (server) => {
     socket.on("join-room", async ({ roomId, username }) => {
       socket.join(roomId);
       socket.username = username;
-      io.to(roomId).emit("update-room-data", await getRoomUsersData(roomId));
+      io.to(roomId).emit("update-room-data", await getRoomData(roomId));
+      io.to(socket.id).emit("is-user-host", getIsUserHost(roomId, socket));
     });
 
     socket.on("leave-room", async (roomId) => {
       socket.leave(roomId);
       socket.card = "";
-      io.to(roomId).emit("update-room-data", await getRoomUsersData(roomId));
+      io.to(roomId).emit("update-room-data", await getRoomData(roomId));
       updateHostedRoomsList(socket, roomId);
     });
 
@@ -90,7 +91,7 @@ export const socketIoLogic = (server) => {
   const leaveAllRooms = async (socket) => {
     for (const roomId of socket.rooms) {
       socket.leave(roomId);
-      io.to(roomId).emit("update-room-data", await getRoomUsersData(roomId));
+      io.to(roomId).emit("update-room-data", await getRoomData(roomId));
       updateHostedRoomsList(socket, roomId);
     }
   };
@@ -102,7 +103,7 @@ export const socketIoLogic = (server) => {
     }
   };
 
-  const getRoomUsersData = async (roomId) => {
+  const getRoomData = async (roomId) => {
     const userIds = io.sockets.adapter.rooms.get(roomId);
     if (!userIds) return null;
 
@@ -119,5 +120,11 @@ export const socketIoLogic = (server) => {
       : { roomId: "", hostId: "", hostUsername: "", areCardsRevealed: false };
 
     return { roomInfo: returningRoomInfo, usersInRoom };
+  };
+
+  const getIsUserHost = (roomId, userSocket) => {
+    const singleHostedRoom = hostedRooms.filter((single) => single.roomId === roomId);
+    if (singleHostedRoom[0].hostId === userSocket.id) return true;
+    return false;
   };
 };

@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import React from "react";
 import HostRoom from "./HostRoom/HostRoom";
 import GuestRoom from "./GuestRoom";
 import { checkIfHostLeft, getSortedResults, getStringWhoLeftToVote } from "../utils/roomUtils";
 import { ToastContainer } from "react-toastify";
 import styles from "./Home/Home.module.scss";
-import RoomTopBar from "./RoomTopBar/RoomTopBar";
 
 export default function Room({ socket, userId }) {
   const roomData2 = {
@@ -70,8 +69,6 @@ export default function Room({ socket, userId }) {
     ],
   };
 
-  console.log(socket.id);
-
   const { id: roomId } = useParams();
   const navigator = useNavigate();
   const [roomData, setRoomData] = useState({ roomInfo: {}, usersInRoom: [] });
@@ -79,7 +76,13 @@ export default function Room({ socket, userId }) {
   const [leftToVoteString, setLeftToVoteString] = useState("");
   const [voteResults, setVoteResults] = useState({});
 
-  const isUserHost = sessionStorage.getItem("isUserHost") === "true";
+  // let isUserHost = sessionStorage.getItem("isUserHost") === "true";
+  // const location = useLocation();
+
+  const [isHost, setHost] = useState(false);
+
+  // const { isHosting } = location.state || {};
+  // console.log(isHosting);
 
   const handleLeave = (status) => {
     socket.emit("leave-room", roomId);
@@ -103,27 +106,31 @@ export default function Room({ socket, userId }) {
       navigator("/", { state: { roomNotHosted: true } });
     });
 
-    socket.on("update-room-data", (data) => {
-      setIsCardsRevealed(data?.roomInfo?.areCardsRevealed || false);
-      setRoomData(data);
-      setLeftToVoteString(getStringWhoLeftToVote(data));
-      checkIfHostLeft(data, handleLeave);
-      setVoteResults(getSortedResults(data));
-      //DEV ENV
-      // setLeftToVoteString(getStringWhoLeftToVote(roomData));
-      // checkIfHostLeft(roomData, handleLeave);
+    socket.on("update-room-data", (roomData) => {
+      setIsCardsRevealed(roomData?.roomInfo?.areCardsRevealed || false);
+      setRoomData(roomData);
+      setLeftToVoteString(getStringWhoLeftToVote(roomData));
+      checkIfHostLeft(roomData, handleLeave);
+      setVoteResults(getSortedResults(roomData));
+    });
+
+    socket.on("is-user-host", (isHosting) => {
+      setHost(isHosting);
     });
 
     return () => {
       socket.off("update-room-data");
       socket.off("check-room-response");
+      socket.off("is-hosting-response");
     };
   }, []);
+
+  console.log(isHost);
 
   return (
     <>
       <ToastContainer className={styles.toastClass} />
-      {isUserHost ? (
+      {isHost ? (
         <HostRoom
           socket={socket}
           roomData={roomData}

@@ -5,6 +5,7 @@ import IconLeave from "../components/Icons/IconLeave";
 import IconCopy from "../components/icons/IconCopy";
 import IconReveal from "../components/Icons/IconReveal";
 import IconReset from "../components/Icons/IconReset";
+import React from "react";
 
 export const composeClassName = (...classes) => {
   return classes.filter(Boolean).join(" ");
