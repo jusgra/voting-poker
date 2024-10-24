@@ -7,7 +7,6 @@ import styles from "./Home.module.scss";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getUsername } from "../../../utils/roomUtils";
 import { TEXT_CONST, TOAST_SETTINGS } from "../../../utils/constants";
 import TopBar from "../../TopBar/TopBar";
 import Button from "../../Button/Button";
