@@ -1,5 +1,5 @@
 import React from "react";
-import { composeClassName } from "../utils/utilFunctions";
+import { composeClassName } from "../../../utils/utilFunctions";
 
 import styles from "./UsersCards.module.scss";
 import VoteResults from "./VoteResults";

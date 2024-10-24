@@ -1,4 +1,4 @@
-export const textConst = {
+export const TEXT_CONST = {
   home: {
     placeholder: "What is your name?",
     listOfRooms: "List of hosted rooms",
@@ -22,6 +22,8 @@ export const textConst = {
     result: ["has been voted", "time"],
     average: "Voting average:",
     noVotes: "None of the users participated in this vote",
+    votingEnded: "Voting has concluded",
+    voteNow: "You can now vote",
     header: {
       cardsRevealed: "Cards are now revealed",
       waitingForMany: "Waiting for {0} players to vote",
@@ -32,7 +34,7 @@ export const textConst = {
   },
 };
 
-export const toastSettings = {
+export const TOAST_SETTINGS = {
   position: "top-center",
   autoClose: 3000,
   closeOnClick: true,

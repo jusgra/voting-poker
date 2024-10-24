@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import { getSortedResults } from "../../utils/roomUtils";
 import styles from "./HostRoom.module.scss";
-import Button from "../Button/Button";
-import { ButtonTypes } from "../../utils/ButtonTypes";
-import { textConst, toastSettings } from "../../utils/constants";
+import Button from "../../Button/Button";
+import { BUTTON_TYPES } from "../../../utils/ButtonTypes";
+import { TEXT_CONST, TOAST_SETTINGS } from "../../../utils/constants";
 import { toast } from "react-toastify";
-import { composeClassName } from "../../utils/utilFunctions";
-import RoomTopBar from "../RoomTopBar/RoomTopBar";
+import { composeClassName } from "../../../utils/utilFunctions";
+import RoomTopBar from "../RoomComponents/RoomTopBar";
 import HostRoomHeader from "./HostRoomHeader";
-import UsersCards from "../UsersCards";
+import UsersCards from "../RoomComponents/UsersCards";
 
 export default function HostRoom({ socket, roomData, handleLeave, isCardsRevealed, leftToVoteString, voteResults }) {
   const { id: roomId } = useParams();
@@ -27,7 +26,7 @@ export default function HostRoom({ socket, roomData, handleLeave, isCardsReveale
 
   const handleCopyClick = () => {
     navigator.clipboard.writeText(window.location.href).then(() => {
-      toast.info(textConst.home.toasts.copySuccess, { ...toastSettings, hideProgressBar: true, autoClose: 1000 });
+      toast.info(TEXT_CONST.home.toasts.copySuccess, { ...TOAST_SETTINGS, hideProgressBar: true, autoClose: 1000 });
     });
   };
 
@@ -48,8 +47,8 @@ export default function HostRoom({ socket, roomData, handleLeave, isCardsReveale
           <Button
             styling={styles.button}
             onClick={handleCopyClick}
-            buttonText={textConst.room.copy}
-            type={ButtonTypes.COPY}
+            buttonText={TEXT_CONST.room.copy}
+            type={BUTTON_TYPES.COPY}
           />
         </div>
       ) : (

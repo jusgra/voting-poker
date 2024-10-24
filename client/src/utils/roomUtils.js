@@ -1,4 +1,4 @@
-import { textConst } from "./constants";
+import { TEXT_CONST } from "./constants";
 import { replacePlaceholders } from "./utilFunctions";
 
 export const CARD_CONSTS = {
@@ -109,9 +109,9 @@ export const getStringWhoLeftToVote = (roomData) => {
   });
 
   if (playersThatDidNotVote.length > 1)
-    return replacePlaceholders(textConst.room.header.waitingForMany, playersThatDidNotVote.length);
+    return replacePlaceholders(TEXT_CONST.room.header.waitingForMany, playersThatDidNotVote.length);
   if (playersThatDidNotVote.length === 1)
-    return replacePlaceholders(textConst.room.header.waitingForOne, playersThatDidNotVote[0].username);
-  if (roomData.usersInRoom.length <= 1) return textConst.room.header.roomEmpty;
-  return textConst.room.header.allVoted;
+    return replacePlaceholders(TEXT_CONST.room.header.waitingForOne, playersThatDidNotVote[0].username);
+  if (roomData.usersInRoom.length <= 1) return TEXT_CONST.room.header.roomEmpty;
+  return TEXT_CONST.room.header.allVoted;
 };

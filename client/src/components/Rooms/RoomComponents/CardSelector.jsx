@@ -1,11 +1,10 @@
-import { CARDS } from "../utils/constants";
+import { CARDS } from "../../../utils/constants";
 import React, { useEffect, useState } from "react";
 import styles from "./CardSelector.module.scss";
-import { composeClassName } from "../utils/utilFunctions";
+import { composeClassName } from "../../../utils/utilFunctions";
 import { useParams } from "react-router-dom";
 
-export default function CardSelector({ socket, roomData, isCardsRevealed }) {
-  //   const selectedCard = getUserSelectedCard;
+export default function CardSelector({ socket, isCardsRevealed }) {
   const [card, setCard] = useState("");
   const { id: roomId } = useParams();
 

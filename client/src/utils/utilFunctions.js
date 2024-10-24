@@ -1,4 +1,4 @@
-import { ButtonTypes } from "./ButtonTypes";
+import { BUTTON_TYPES } from "./ButtonTypes";
 import IconHost from "../components/Icons/IconHost";
 import IconJoin from "../components/Icons/IconJoin";
 import IconLeave from "../components/Icons/IconLeave";
@@ -19,17 +19,17 @@ export const replacePlaceholders = (str, ...args) => {
 
 export const getButtonIcon = (type, styling) => {
   switch (type) {
-    case ButtonTypes.JOIN:
+    case BUTTON_TYPES.JOIN:
       return <IconJoin sizeInPx={24} styling={styling} />;
-    case ButtonTypes.HOST:
+    case BUTTON_TYPES.HOST:
       return <IconHost sizeInPx={24} styling={styling} />;
-    case ButtonTypes.LEAVE:
+    case BUTTON_TYPES.LEAVE:
       return <IconLeave sizeInPx={24} styling={styling} />;
-    case ButtonTypes.COPY:
+    case BUTTON_TYPES.COPY:
       return <IconCopy sizeInPx={22} styling={styling} />;
-    case ButtonTypes.REVEAL:
+    case BUTTON_TYPES.REVEAL:
       return <IconReveal sizeInPx={24} styling={styling} />;
-    case ButtonTypes.RESET:
+    case BUTTON_TYPES.RESET:
       return <IconReset sizeInPx={24} styling={styling} />;
     default:
       return;

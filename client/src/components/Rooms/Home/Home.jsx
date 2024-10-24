@@ -4,18 +4,20 @@ import { v4 as uuidv4 } from "uuid";
 import React from "react";
 import RoomsList from "./RoomsList";
 import styles from "./Home.module.scss";
-import Button from "../Button/Button";
-import { ButtonTypes } from "../../utils/ButtonTypes";
-import { textConst, toastSettings } from "../../utils/constants";
-import { getUsername } from "../../utils/roomUtils";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TopBar from "../TopBar/TopBar";
+import { getUsername } from "../../../utils/roomUtils";
+import { TEXT_CONST, TOAST_SETTINGS } from "../../../utils/constants";
+import TopBar from "../../TopBar/TopBar";
+import Button from "../../Button/Button";
+import { BUTTON_TYPES } from "../../../utils/ButtonTypes";
 
 export default function Home({ socket }) {
   const [hostedRooms, setHostedRooms] = useState([]);
-  const [usernameValue, setUsernameValue] = useState(getUsername());
+
+  const storageUsername = localStorage.getItem("username");
+  const [usernameValue, setUsernameValue] = useState(storageUsername);
   const location = useLocation();
   const navigator = useNavigate();
 
@@ -25,11 +27,10 @@ export default function Home({ socket }) {
 
   const handleRoomJoin = (isHostingRoom, clickedRoomId) => {
     if (!usernameValue) {
-      toast.error(textConst.home.toasts.whatsYourName, toastSettings);
+      toast.error(TEXT_CONST.home.toasts.whatsYourName, TOAST_SETTINGS);
       return;
     }
-    // sessionStorage.setItem("isUserHost", isHostingRoom);
-    sessionStorage.setItem("username", usernameValue);
+    localStorage.setItem("username", usernameValue);
 
     const roomId = isHostingRoom ? uuidv4() : clickedRoomId;
     if (isHostingRoom) {
@@ -56,8 +57,8 @@ export default function Home({ socket }) {
 
     if (gotDisconnected || roomNotHosted) {
       timeoutId = setTimeout(() => {
-        const message = gotDisconnected ? textConst.home.toasts.hostLeft : textConst.home.toasts.noRoom;
-        toast.warning(message, toastSettings);
+        const message = gotDisconnected ? TEXT_CONST.home.toasts.hostLeft : TEXT_CONST.home.toasts.noRoom;
+        toast.warning(message, TOAST_SETTINGS);
         navigator(".", { replace: true, state: { gotDisconnected: false, roomNotHosted: false } });
       }, 500);
     }
@@ -75,7 +76,7 @@ export default function Home({ socket }) {
       <div className={styles.usernameWrapper}>
         <input
           className={styles.usernameInput}
-          placeholder={textConst.home.placeholder}
+          placeholder={TEXT_CONST.home.placeholder}
           onChange={handleChange}
           value={usernameValue}
         ></input>
@@ -84,7 +85,7 @@ export default function Home({ socket }) {
         <RoomsList hostedRooms={hostedRooms} roomClick={(id) => handleRoomJoin(false, id)} />
       </div>
       <div className={styles.buttonContainer}>
-        <Button onClick={() => handleRoomJoin(true)} buttonText={textConst.home.hostButton} type={ButtonTypes.HOST} />
+        <Button onClick={() => handleRoomJoin(true)} buttonText={TEXT_CONST.home.hostButton} type={BUTTON_TYPES.HOST} />
       </div>
     </div>
   );

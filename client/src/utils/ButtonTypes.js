@@ -1,4 +1,4 @@
-export const ButtonTypes = {
+export const BUTTON_TYPES = {
   JOIN: "JOIN",
   HOST: "HOST",
   LEAVE: "LEAVE",

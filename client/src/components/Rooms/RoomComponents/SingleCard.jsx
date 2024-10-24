@@ -1,10 +1,10 @@
-import { figureOutCardShowing, getCardStatus } from "../utils/roomUtils";
+import { figureOutCardShowing, getCardStatus } from "../../../utils/roomUtils";
 import React from "react";
-import IconDidntVote from "./Icons/IconDidntVote";
-import { textConst } from "../utils/constants";
-import IconVoting from "./Icons/IconVoting";
-import IconVoted from "./Icons/IconVoted";
-import { composeClassName } from "../utils/utilFunctions";
+import IconDidntVote from "../../Icons/IconDidntVote";
+import { TEXT_CONST } from "../../../utils/constants";
+import IconVoting from "../../Icons/IconVoting";
+import IconVoted from "../../Icons/IconVoted";
+import { composeClassName } from "../../../utils/utilFunctions";
 import styles from "./SingleCard.module.scss";
 
 export default function SingleCard({ roomData, userCardInfo, isCardsRevealed, index, socket }) {
@@ -30,7 +30,7 @@ export default function SingleCard({ roomData, userCardInfo, isCardsRevealed, in
           {cardStatus.hasNotVoted && (
             <>
               <IconDidntVote sizeInPx={42} />
-              <span className={styles.userSkipped}>{textConst.room.didNotVote}</span>
+              <span className={styles.userSkipped}>{TEXT_CONST.room.didNotVote}</span>
             </>
           )}
           {cardStatus.isVoteRevealed && <span>{userCardInfo.card}</span>}
