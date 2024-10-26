@@ -94,10 +94,13 @@ export const checkIfHostLeft = ({ roomInfo, usersInRoom }, callbackLeave) => {
 
 export const getSortedResults = (roomData) => {
   const frequencyObject = {};
+  console.log(roomData);
+
   roomData.usersInRoom.forEach((user) => {
-    if (user.card) {
-      if (frequencyObject[user.card]) frequencyObject[user.card] += 1;
-      else frequencyObject[user.card] = 1;
+    if (user.id !== roomData.roomInfo.hostId) {
+      const card = user.card || "skip";
+      if (frequencyObject[card]) frequencyObject[card] += 1;
+      else frequencyObject[card] = 1;
     }
   });
   return frequencyObject;

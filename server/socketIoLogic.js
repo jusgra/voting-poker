@@ -65,7 +65,10 @@ export const socketIoLogic = (server) => {
       socket.join(roomId);
       socket.username = username;
       io.to(roomId).emit("update-room-data", await getRoomData(roomId));
-      io.to(socket.id).emit("is-user-host", getIsUserHost(roomId, socket));
+      io.to(socket.id).emit("join-room-response", {
+        isHosting: getIsUserHost(roomId, socket),
+        roomData: await getRoomData(roomId),
+      });
     });
 
     socket.on("leave-room", async (roomId) => {

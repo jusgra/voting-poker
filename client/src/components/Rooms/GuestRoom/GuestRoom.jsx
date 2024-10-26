@@ -9,11 +9,9 @@ export default function GuestRoom({ socket, roomData, handleLeave, isCardsReveal
   return (
     <>
       <RoomTopBar isHostRoom={false} handleLeave={handleLeave} roomData={roomData} />
-      <div className={styles.roomContainer}>
-        <h1 className={styles.header}>{isCardsRevealed ? TEXT_CONST.room.votingEnded : TEXT_CONST.room.voteNow} </h1>
-        <CardSelector isCardsRevealed={isCardsRevealed} socket={socket} />
-        <UsersCards socket={socket} roomData={roomData} isCardsRevealed={isCardsRevealed} voteResults={voteResults} />
-      </div>
+      <h1 className={styles.header}>{isCardsRevealed ? TEXT_CONST.room.votingEnded : TEXT_CONST.room.voteNow} </h1>
+      <CardSelector isCardsRevealed={isCardsRevealed} socket={socket} />
+      <UsersCards socket={socket} roomData={roomData} isCardsRevealed={isCardsRevealed} voteResults={voteResults} />
     </>
   );
 }

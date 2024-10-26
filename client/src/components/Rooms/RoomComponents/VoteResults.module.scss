@@ -1,13 +1,23 @@
 .result-container {
-  padding: 10px;
+  padding: 0 10px;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  height: 150px;
 
   &.empty {
     justify-content: center;
     text-align: center;
   }
+}
+
+.votes-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+  column-gap: 48px;
 }
 
 .single-result {

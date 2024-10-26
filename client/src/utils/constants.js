@@ -19,7 +19,7 @@ export const TEXT_CONST = {
     reveal: "Reveal cards",
     reset: "Reset voting",
     didNotVote: "Did not vote",
-    result: ["has been voted", "time"],
+    result: ["has been voted ", " time", " skipped the voting."],
     average: "Voting average:",
     noVotes: "None of the users participated in this vote",
     votingEnded: "Voting has concluded",

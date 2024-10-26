@@ -31,7 +31,7 @@ export default function HostRoom({ socket, roomData, handleLeave, isCardsReveale
   };
 
   return (
-    <div className={styles.roomContainer}>
+    <>
       <RoomTopBar isHostRoom={true} handleLeave={handleLeave} handleCopyClick={handleCopyClick} roomData={roomData} />
 
       <HostRoomHeader
@@ -54,6 +54,6 @@ export default function HostRoom({ socket, roomData, handleLeave, isCardsReveale
       ) : (
         <UsersCards socket={socket} roomData={roomData} isCardsRevealed={isCardsRevealed} voteResults={voteResults} />
       )}
-    </div>
+    </>
   );
 }

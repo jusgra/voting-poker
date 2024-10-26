@@ -4,7 +4,8 @@ import React from "react";
 import HostRoom from "./HostRoom/HostRoom";
 import { checkIfHostLeft, getSortedResults, getStringWhoLeftToVote } from "../../utils/roomUtils";
 import { ToastContainer } from "react-toastify";
-import styles from "./Home/Home.module.scss";
+import homeStyles from "./Home/Home.module.scss";
+import roomStyles from "./Room.module.scss";
 import GuestRoom from "./GuestRoom/GuestRoom";
 
 export default function Room({ socket }) {
@@ -14,7 +15,7 @@ export default function Room({ socket }) {
   const [isCardsRevealed, setIsCardsRevealed] = useState(false);
   const [leftToVoteString, setLeftToVoteString] = useState("");
   const [voteResults, setVoteResults] = useState({});
-  const [isHost, setHost] = useState(false);
+  const [isHost, setHost] = useState(null);
 
   const handleLeave = (status) => {
     socket.emit("leave-room", roomId);
@@ -40,13 +41,21 @@ export default function Room({ socket }) {
 
     socket.on("update-room-data", (roomData) => {
       setIsCardsRevealed(roomData?.roomInfo?.areCardsRevealed || false);
-      setRoomData(roomData);
       setLeftToVoteString(getStringWhoLeftToVote(roomData));
+      if (!roomData?.roomInfo?.areCardsRevealed) {
+        //after vote has concluded, players leaving will not update room data
+        setRoomData(roomData);
+        setVoteResults(getSortedResults(roomData));
+      }
       checkIfHostLeft(roomData, handleLeave);
-      setVoteResults(getSortedResults(roomData));
     });
 
-    socket.on("is-user-host", (isHosting) => {
+    socket.on("join-room-response", ({ isHosting, roomData }) => {
+      if (roomData?.roomInfo?.areCardsRevealed) {
+        //joining into session after vote has concluded
+        setRoomData(roomData);
+        setVoteResults(getSortedResults(roomData));
+      }
       setHost(isHosting);
     });
 
@@ -57,29 +66,31 @@ export default function Room({ socket }) {
     };
   }, []);
 
-  console.log(isHost);
+  if (isHost === null) return null;
 
   return (
     <>
-      <ToastContainer className={styles.toastClass} />
-      {isHost ? (
-        <HostRoom
-          socket={socket}
-          roomData={roomData}
-          isCardsRevealed={isCardsRevealed}
-          handleLeave={handleLeave}
-          leftToVoteString={leftToVoteString}
-          voteResults={voteResults}
-        />
-      ) : (
-        <GuestRoom
-          socket={socket}
-          roomData={roomData}
-          isCardsRevealed={isCardsRevealed}
-          handleLeave={handleLeave}
-          voteResults={voteResults}
-        />
-      )}
+      <ToastContainer className={homeStyles.toastClass} />
+      <div className={roomStyles.roomContainer}>
+        {isHost ? (
+          <HostRoom
+            socket={socket}
+            roomData={roomData}
+            isCardsRevealed={isCardsRevealed}
+            handleLeave={handleLeave}
+            leftToVoteString={leftToVoteString}
+            voteResults={voteResults}
+          />
+        ) : (
+          <GuestRoom
+            socket={socket}
+            roomData={roomData}
+            isCardsRevealed={isCardsRevealed}
+            handleLeave={handleLeave}
+            voteResults={voteResults}
+          />
+        )}
+      </div>
     </>
   );
 }

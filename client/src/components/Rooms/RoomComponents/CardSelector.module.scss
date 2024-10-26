@@ -26,6 +26,14 @@
   &.selected {
     background-color: #b58f27b6;
     transform: translateY(-16px);
+
+    &.disabled {
+      cursor: default;
+
+      &:hover {
+        background-color: #b58f27b6;
+      }
+    }
   }
 
   &.done {
@@ -35,5 +43,9 @@
 
   &.disabled {
     cursor: default;
+
+    &:hover {
+      background-color: inherit;
+    }
   }
 }

@@ -2,7 +2,7 @@ import { BUTTON_TYPES } from "./ButtonTypes";
 import IconHost from "../components/Icons/IconHost";
 import IconJoin from "../components/Icons/IconJoin";
 import IconLeave from "../components/Icons/IconLeave";
-import IconCopy from "../components/icons/IconCopy";
+import IconCopy from "../components/Icons/IconCopy.jsx";
 import IconReveal from "../components/Icons/IconReveal";
 import IconReset from "../components/Icons/IconReset";
 import React from "react";

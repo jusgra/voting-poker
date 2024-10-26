@@ -5,32 +5,32 @@ import { composeClassName } from "../../../utils/utilFunctions";
 import { useParams } from "react-router-dom";
 
 export default function CardSelector({ socket, isCardsRevealed }) {
-  const [card, setCard] = useState("");
+  const [userSelectedCard, setUserSelectedCard] = useState("");
   const { id: roomId } = useParams();
 
   const handleClick = (cardNumber) => {
     if (isCardsRevealed) return;
     socket.emit("card-pick", { roomId: roomId.toString(), pickedCard: cardNumber.toString() });
-    setCard(cardNumber);
+    setUserSelectedCard(cardNumber);
   };
 
   useEffect(() => {
-    if (!isCardsRevealed) setCard("");
+    if (!isCardsRevealed) setUserSelectedCard("");
   }, [isCardsRevealed]);
 
   return (
     <div className={styles.cardsContainer}>
-      {CARDS.map((singleCard) => {
+      {CARDS.map((card) => {
         return (
           <div
             className={composeClassName(
               styles.cardWrapper,
               isCardsRevealed && styles.disabled,
-              card === singleCard ? styles.selected : isCardsRevealed && styles.done
+              userSelectedCard === card ? styles.selected : isCardsRevealed && styles.done
             )}
-            onClick={() => handleClick(singleCard)}
+            onClick={() => handleClick(card)}
           >
-            {singleCard}
+            {card}
           </div>
         );
       })}
