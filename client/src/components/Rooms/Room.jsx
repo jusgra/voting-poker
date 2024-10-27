@@ -16,12 +16,12 @@ export default function Room({ socket }) {
   const [leftToVoteString, setLeftToVoteString] = useState("");
   const [voteResults, setVoteResults] = useState({});
   const [isHost, setHost] = useState(null);
+  let storageUsername = localStorage.getItem("username");
 
   const handleLeave = (status) => {
     socket.emit("leave-room", roomId);
     navigator("/", { state: { gotDisconnected: status?.wasDisconnected } });
   };
-  let storageUsername = localStorage.getItem("username");
 
   useEffect(() => {
     socket.emit("check-room", roomId);

@@ -35,7 +35,7 @@ export default function Home({ socket }) {
     if (isHostingRoom) {
       socket.emit("host-room", { roomId, username: usernameValue });
     }
-    navigator(`/room/${roomId}`, { state: { isHosting: isHostingRoom } });
+    navigator(`/room/${roomId}`);
   };
 
   useEffect(() => {
