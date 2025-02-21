@@ -42,4 +42,11 @@ export const TOAST_SETTINGS = {
   draggable: false,
 };
 
+export const CARD_VALUES = {
+  VOTE_REVEALED: "VOTE_REVEALED",
+  VOTED: "VOTED",
+  YET_TO_VOTE: "YET_TO_VOTE",
+  DID_NOT_VOTE: "DID_NOT_VOTE",
+};
+
 export const CARDS = [1, 2, 3, 5, 8, 13, "?"];

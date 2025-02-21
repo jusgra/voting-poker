@@ -1,12 +1,5 @@
-import { TEXT_CONST } from "./constants";
+import {CARD_VALUES, TEXT_CONST} from "./constants";
 import { replacePlaceholders } from "./utilFunctions";
-
-export const CARD_CONSTS = {
-  VOTE_REVEALED: "VOTE_REVEALED",
-  VOTED: "VOTED",
-  YET_TO_VOTE: "YET_TO_VOTE",
-  DID_NOT_VOTE: "DID_NOT_VOTE",
-};
 
 export const getCardAvg = (roomData) => {
   const cards = [];
@@ -74,16 +67,16 @@ export const getUsername = () => {
 
 export const figureOutCardShowing = (userInfo, isCardsRevealed) => {
   if (isCardsRevealed) {
-    return userInfo.card ? CARD_CONSTS.VOTE_REVEALED : CARD_CONSTS.DID_NOT_VOTE;
+    return userInfo.card ? CARD_VALUES.VOTE_REVEALED : CARD_VALUES.DID_NOT_VOTE;
   }
-  return userInfo.card ? CARD_CONSTS.VOTED : CARD_CONSTS.YET_TO_VOTE;
+  return userInfo.card ? CARD_VALUES.VOTED : CARD_VALUES.YET_TO_VOTE;
 };
 
 export const getCardStatus = (currentCard) => {
-  const hasVoted = currentCard === CARD_CONSTS.VOTED;
-  const hasNotVoted = currentCard === CARD_CONSTS.DID_NOT_VOTE;
-  const hasToVote = currentCard === CARD_CONSTS.YET_TO_VOTE;
-  const isVoteRevealed = currentCard === CARD_CONSTS.VOTE_REVEALED;
+  const hasVoted = currentCard === CARD_VALUES.VOTED;
+  const hasNotVoted = currentCard === CARD_VALUES.DID_NOT_VOTE;
+  const hasToVote = currentCard === CARD_VALUES.YET_TO_VOTE;
+  const isVoteRevealed = currentCard === CARD_VALUES.VOTE_REVEALED;
   return { hasVoted, hasNotVoted, hasToVote, isVoteRevealed };
 };
 
