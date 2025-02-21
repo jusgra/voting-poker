@@ -17,6 +17,16 @@
   .host-username {
     margin-right: 16px;
   }
+
+  .room-info {
+    align-items: center;
+    display: none;
+    gap: 12px;
+
+    @media(min-width: 1024px) {
+      display: flex;
+    }
+  }
 }
 .middle {
   display: flex;
@@ -43,5 +53,14 @@
   .username {
     color: #ecdfcc;
     margin-right: 16px;
+  }
+
+  .user-info {
+    align-items: center;
+    display: none;
+
+    @media(min-width: 1024px) {
+      display: flex;
+    }
   }
 }

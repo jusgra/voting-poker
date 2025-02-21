@@ -14,19 +14,20 @@ export default function RoomTopBar({ handleCopyClick, isHostRoom, handleLeave, r
     <TopBar styling={styles.topBarContainer}>
       <div className={styles.leftSide}>
         {isHostRoom && <Button onClick={handleCopyClick} buttonText={TEXT_CONST.room.copy} type={BUTTON_TYPES.COPY} />}
-        <IconRoom sizeInPx={36} />
-        <span className={styles.hostUsername}>{roomData.roomInfo.hostUsername} room</span>
+        <div className={styles.roomInfo}>
+            <IconRoom sizeInPx={36} />
+            <span className={styles.hostUsername}>{roomData.roomInfo.hostUsername} room</span>
+        </div>
       </div>
       <div className={styles.middle}>
         <span>{TEXT_CONST.room.participants}</span>
         <span className={styles.usersNumber}>{roomData.usersInRoom.length - 1}</span>
       </div>
-
       <div className={styles.rightSide}>
-        <IconPersonBadge sizeInPx={36} />
-
-        <span className={styles.username}>{username}</span>
-
+        <div className={styles.userInfo}>
+            <IconPersonBadge sizeInPx={36} />
+            <span className={styles.username}>{username}</span>
+        </div>
         <Button
           onClick={handleLeave}
           styling={styles.backButton}

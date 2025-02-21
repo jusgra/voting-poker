@@ -127,7 +127,7 @@ export const socketIoLogic = (server) => {
 
   const getIsUserHost = (roomId, userSocket) => {
     const singleHostedRoom = hostedRooms.filter((single) => single.roomId === roomId);
-    if (singleHostedRoom[0].hostId === userSocket.id) return true;
-    return false;
+    return singleHostedRoom[0].hostId === userSocket.id;
+
   };
 };

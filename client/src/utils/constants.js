@@ -14,7 +14,7 @@ export const TEXT_CONST = {
   },
   room: {
     leave: "Leave Room",
-    copy: "Copy Invite Link",
+    copy: "Copy Room Link",
     participants: "Participants:",
     reveal: "Reveal cards",
     reset: "Reset voting",
