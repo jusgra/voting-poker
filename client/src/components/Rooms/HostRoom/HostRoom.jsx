@@ -12,8 +12,6 @@ import UsersCards from "../RoomComponents/UsersCards";
 
 export default function HostRoom({ socket, roomData, handleLeave, isCardsRevealed, leftToVoteString, voteResults }) {
   const { id: roomId } = useParams();
-  console.log("rendering host room");
-
   const isRoomEmpty = roomData.usersInRoom.length <= 1;
 
   const handleReveal = () => {

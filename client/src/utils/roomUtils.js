@@ -1,4 +1,4 @@
-import {CARD_VALUES, TEXT_CONST} from "./constants";
+import { CARD_VALUES, TEXT_CONST } from "./constants";
 import { replacePlaceholders } from "./utilFunctions";
 
 export const getCardAvg = (roomData) => {
@@ -87,8 +87,6 @@ export const checkIfHostLeft = ({ roomInfo, usersInRoom }, callbackLeave) => {
 
 export const getSortedResults = (roomData) => {
   const frequencyObject = {};
-  console.log(roomData);
-
   roomData.usersInRoom.forEach((user) => {
     if (user.id !== roomData.roomInfo.hostId) {
       const card = user.card || "skip";

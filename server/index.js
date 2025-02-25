@@ -2,7 +2,7 @@ import express from "express";
 import { createServer } from "node:http";
 import cors from "cors";
 import { socketIoLogic } from "./socketIoLogic.js";
-import 'dotenv/config';
+import "dotenv/config";
 
 const SERVER_PORT = process.env?.SERVER_PORT || 3001;
 
