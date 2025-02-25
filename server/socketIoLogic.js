@@ -1,9 +1,13 @@
 import { Server } from "socket.io";
+import 'dotenv/config';
 
 export const socketIoLogic = (server) => {
+  const CLIENT_PORT = process.env?.CLIENT_PORT;
+  const URL = process.env?.HOSTED_URL || process.env?.LOCAL_HOSTED_URL;
+
   const io = new Server(server, {
     cors: {
-      origin: "http://localhost:3000", //client side origin and port
+      origin: `${URL}:${CLIENT_PORT}`, //client side origin and port
     },
   });
 

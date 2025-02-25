@@ -5,7 +5,11 @@ import React from "react";
 import Home from "./components/Rooms/Home/Home";
 import Room from "./components/Rooms/Room";
 
-const socket = io.connect("http://localhost:3001");
+const URL = import.meta.env?.PUBLIC_HOSTED_URL || import.meta.env?.PUBLIC_LOCAL_HOSTED_URL;
+const SERVER_PORT = import.meta.env?.PUBLIC_SERVER_PORT;
+
+const socket = io.connect(`${URL}:${SERVER_PORT}`); //server side URL and PORT
+
 
 const App = () => {
   useEffect(() => {
