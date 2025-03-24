@@ -12,6 +12,7 @@ export default function UsersCards({ socket, roomData, isCardsRevealed, voteResu
         <div className={styles.containerHeader}>Users in room</div>
         {roomData.usersInRoom.map((userCardInfo, index) => (
           <SingleCard
+            key={index}
             roomData={roomData}
             userCardInfo={userCardInfo}
             index={index}

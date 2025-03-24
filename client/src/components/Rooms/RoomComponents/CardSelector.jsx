@@ -10,6 +10,13 @@ export default function CardSelector({ socket, isCardsRevealed }) {
 
   const handleClick = (cardNumber) => {
     if (isCardsRevealed) return;
+
+    if (cardNumber === userSelectedCard) {
+      setUserSelectedCard("");
+      socket.emit("card-pick", { roomId: roomId.toString(), pickedCard: "" });
+      return;
+    }
+
     socket.emit("card-pick", { roomId: roomId.toString(), pickedCard: cardNumber.toString() });
     setUserSelectedCard(cardNumber);
   };
@@ -20,9 +27,10 @@ export default function CardSelector({ socket, isCardsRevealed }) {
 
   return (
     <div className={styles.cardsContainer}>
-      {CARDS.map((card) => {
+      {CARDS.map((card, index) => {
         return (
           <div
+            key={index}
             className={composeClassName(
               styles.cardWrapper,
               isCardsRevealed && styles.disabled,

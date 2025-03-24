@@ -13,6 +13,7 @@ export const TEXT_CONST = {
     },
   },
   room: {
+    version: "Build Version: {0}",
     leave: "Leave Room",
     copy: "Copy Room Link",
     participants: "Participants:",
